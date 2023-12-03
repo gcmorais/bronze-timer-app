@@ -2,7 +2,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import Login from '../screens/login';
+import Home from '../screens/home';
 
 const Stack = createNativeStackNavigator();
 
@@ -15,7 +15,7 @@ export default function StackRoutes() {
     >
       <Stack.Screen
         name="Home"
-        component={Login}
+        component={Home}
       />
     </Stack.Navigator>
   );
