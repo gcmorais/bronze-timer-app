@@ -1,10 +1,12 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable import/no-extraneous-dependencies */
+/* eslint-disable react/prop-types */
 /* eslint-disable global-require */
 /* eslint-disable react/jsx-filename-extension */
 import React, { useState } from 'react';
 import { View } from 'react-native';
-import { useForm, Controller } from 'react-hook-form';
-import { yupResolver } from '@hookform/resolvers/yup';
-import * as yup from 'yup';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { auth } from '../../services/firebaseConfig';
 
 import {
   Container,
@@ -12,25 +14,29 @@ import {
   Image,
   Text,
   TextInput,
-  DangerText,
   Button,
   TouchableOpacity,
 } from './style';
 
-const schema = yup.object({
-  username: yup.string().required('Informe seu username'),
-  password: yup.string().min(6, 'A senha deve conter pelo menos 6 dígitos.').required('Informe uma senha'),
-});
+export default function Login({ setUser }) {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-export default function Login() {
-  const [username, setUsername] = useState('');
-  const { control, handleSubmit, formState: { errors } } = useForm({
-    resolver: yupResolver(schema),
-  });
+  const handleLogin = () => {
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed in
+        const { user } = userCredential;
+        console.log(user);
+        setUser(user);
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorMessage);
+      });
+  };
 
-  function handleSignIn(data) {
-    console.log(data);
-  }
   return (
     <Container>
       <ImageBg source={require('../../../assets/background-img.png')} resizeMode="cover">
@@ -39,39 +45,27 @@ export default function Login() {
         />
 
         <View>
-          <Text>Usuário: </Text>
-          <Controller
-            control={control}
-            name="username"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                placeholder="Insira seu usuário"
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-              />
-            )}
+          <Text>Email: </Text>
+          <TextInput
+            placeholder="Insira seu email"
+            onChangeText={(val) => {
+              setEmail(val);
+            }}
+            value={email}
           />
-          {errors.username && <DangerText>{errors.username?.message}</DangerText>}
 
           <Text>Senha: </Text>
-          <Controller
-            control={control}
-            name="password"
-            render={({ field: { onChange, onBlur, value } }) => (
-              <TextInput
-                placeholder="Insira sua senha"
-                secureTextEntry
-                onChangeText={onChange}
-                onBlur={onBlur}
-                value={value}
-              />
-            )}
+          <TextInput
+            placeholder="Insira sua senha"
+            secureTextEntry
+            onChangeText={(val) => {
+              setPassword(val);
+            }}
+            value={password}
           />
-          {errors.password && <DangerText>{errors.password?.message}</DangerText>}
         </View>
 
-        <TouchableOpacity onPress={handleSubmit(handleSignIn)}>
+        <TouchableOpacity onPress={handleLogin}>
           <Button>Entrar</Button>
         </TouchableOpacity>
       </ImageBg>
