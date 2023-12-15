@@ -1,5 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { collection, onSnapshot, doc, query } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  doc,
+  query,
+  deleteDoc,
+} from "firebase/firestore";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 
 import database from "../../config/firebaseconfig";
@@ -21,8 +27,8 @@ export default function Task({ navigation }) {
     });
   }, []);
 
-  function deleteTask(id) {
-    collection(database, "Tasks").doc(id).delete();
+  async function deleteTask(id) {
+    await deleteDoc(doc(database, "Tasks", id));
   }
 
   return (
