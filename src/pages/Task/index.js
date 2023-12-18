@@ -5,15 +5,18 @@ import {
   doc,
   query,
   deleteDoc,
+  getFirestore,
 } from "firebase/firestore";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 
-import database from "../../config/firebaseconfig";
+import app from "../../config/firebaseconfig";
 import { FontAwesome } from "@expo/vector-icons";
 import styles from "./style";
 
 export default function Task({ navigation }) {
   const [task, setTask] = useState([]);
+
+  const database = getFirestore(app);
 
   useEffect(() => {
     const q = query(collection(database, "Tasks"));

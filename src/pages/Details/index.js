@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
 
-import database from "../../config/firebaseconfig";
-import { doc, updateDoc } from "firebase/firestore";
+import app from "../../config/firebaseconfig";
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
 import styles from "./style";
 
 export default function NewTask({ navigation, route }) {
@@ -10,6 +10,7 @@ export default function NewTask({ navigation, route }) {
     route.params.description
   );
   const idTask = route.params.id;
+  const database = getFirestore(app);
 
   async function editTask(description, id) {
     const taskRef = doc(database, "Tasks", id);
