@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, getFirestore } from "firebase/firestore";
 
-import database from "../../config/firebaseconfig";
+import app from "../../config/firebaseconfig";
 import styles from "./style";
 
 export default function NewTask({ navigation }) {
   const [description, setDescription] = useState();
+  const database = getFirestore(app);
 
   async function addTask() {
     const docRef = await addDoc(collection(database, "Tasks"), {
