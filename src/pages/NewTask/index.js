@@ -14,7 +14,7 @@ export default function NewTask({ navigation, route }) {
       description: description,
       status: false,
     });
-    navigation.navigate("Task");
+    navigation.navigate("Task", { idUser: route.params.idUser });
   }
 
   return (
