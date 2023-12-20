@@ -8,7 +8,7 @@ import {
   getFirestore,
 } from "firebase/firestore";
 import { getAuth, signOut } from "firebase/auth";
-import { View, Text, TouchableOpacity, FlatList } from "react-native";
+import { View, Text, TouchableOpacity, FlatList, Animated } from "react-native";
 
 import app from "../../config/firebaseconfig";
 import { FontAwesome, Entypo } from "@expo/vector-icons";
@@ -17,6 +17,38 @@ import styles from "./style";
 
 export default function Task({ navigation, route }) {
   const [task, setTask] = useState([]);
+  const [icon_1] = useState(new Animated.Value(1));
+  const [icon_2] = useState(new Animated.Value(1));
+
+  const [pop, setPop] = useState(false);
+
+  const popIn = () => {
+    setPop(true);
+    Animated.timing(icon_1, {
+      toValue: 140,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(icon_2, {
+      toValue: 70,
+      duration: 300,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const popOut = () => {
+    setPop(false);
+    Animated.timing(icon_1, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+    Animated.timing(icon_2, {
+      toValue: 0,
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
 
   const database = getFirestore(app);
 
@@ -82,19 +114,28 @@ export default function Task({ navigation, route }) {
           );
         }}
       />
-      <TouchableOpacity
-        style={styles.buttonNewTask}
-        onPress={() =>
-          navigation.navigate("New Task", { idUser: route.params.idUser })
-        }
-      >
-        <Text style={styles.iconButton}>+</Text>
-      </TouchableOpacity>
+      <Animated.View style={{ bottom: icon_2 }}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() =>
+            navigation.navigate("New Task", { idUser: route.params.idUser })
+          }
+        >
+          <Text style={styles.iconButton}>+</Text>
+        </TouchableOpacity>
+      </Animated.View>
 
-      <TouchableOpacity style={styles.buttonSignOut} onPress={() => logout()}>
-        <Text style={styles.iconButton}>
+      <Animated.View style={{ bottom: icon_1 }}>
+        <TouchableOpacity style={styles.button} onPress={() => logout()}>
           <Entypo name="log-out" size={24} color="white" />
-        </Text>
+        </TouchableOpacity>
+      </Animated.View>
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => (pop === false ? popIn() : popOut())}
+      >
+        <Entypo name="menu" size={24} color="white" />
       </TouchableOpacity>
     </View>
   );
