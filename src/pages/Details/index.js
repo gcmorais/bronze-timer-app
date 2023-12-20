@@ -20,7 +20,7 @@ export default function NewTask({ navigation, route }) {
       status: false,
     });
 
-    navigation.navigate("Task");
+    navigation.navigate("Task", { idUser: route.params.idUser });
   }
 
   return (
