@@ -7,16 +7,30 @@ import {
   deleteDoc,
   getFirestore,
 } from "firebase/firestore";
+import { getAuth, signOut } from "firebase/auth";
 import { View, Text, TouchableOpacity, FlatList } from "react-native";
 
 import app from "../../config/firebaseconfig";
-import { FontAwesome } from "@expo/vector-icons";
+import { FontAwesome, Entypo } from "@expo/vector-icons";
+
 import styles from "./style";
 
 export default function Task({ navigation, route }) {
   const [task, setTask] = useState([]);
 
   const database = getFirestore(app);
+
+  function logout() {
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        navigation.navigate("Login");
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+    console.log("teste");
+  }
 
   useEffect(() => {
     const q = query(collection(database, route.params.idUser));
@@ -75,6 +89,12 @@ export default function Task({ navigation, route }) {
         }
       >
         <Text style={styles.iconButton}>+</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.buttonSignOut} onPress={() => logout()}>
+        <Text style={styles.iconButton}>
+          <Entypo name="log-out" size={24} color="white" />
+        </Text>
       </TouchableOpacity>
     </View>
   );
