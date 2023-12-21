@@ -27,21 +27,41 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     marginTop: 5,
+    backgroundColor: "#f5f5f5cf",
+    padding: 15,
   },
-  deleteTasks: {
-    justifyContent: "center",
-    paddingLeft: 15,
+  TasksContainer: {
+    width: "80%",
+  },
+  TasksContainerLineTwo: {
+    width: "100%",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    flexWrap: "wrap",
+    marginTop: 10,
+  },
+  editTaskIcon: {
+    marginTop: 30,
   },
   DescriptionTask: {
-    width: "75%",
-    alignContent: "flex-start",
-    backgroundColor: "#f5f5f5cf",
-    padding: 12,
-    paddingHorizontal: 20,
-    borderRadius: 50,
-    marginBottom: 5,
-    marginRight: 15,
-    color: "#282b2db5",
+    color: "#000",
+    fontSize: 25,
+    fontWeight: "bold",
+  },
+  mainTextTask: {
+    color: "#000",
+    fontSize: 25,
+  },
+  TimerContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: 10,
+    marginTop: 2,
+  },
+  ButtonsContainer: {
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

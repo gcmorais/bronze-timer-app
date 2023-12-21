@@ -34,6 +34,7 @@ export default function App() {
           name="New Task"
           component={NewTask}
           options={{
+            headerTitle: "Adicionar",
             headerTintColor: "#F92E6A",
             headerBackTitle: "voltar",
           }}

@@ -35,7 +35,7 @@ const styles = StyleSheet.create({
   },
   iconButton: {
     color: "#ffffff",
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: "bold",
   },
 });

@@ -11,7 +11,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { View, Text, TouchableOpacity, FlatList, Animated } from "react-native";
 
 import app from "../../config/firebaseconfig";
-import { FontAwesome, Entypo } from "@expo/vector-icons";
+import { FontAwesome, Entypo, AntDesign } from "@expo/vector-icons";
 
 import styles from "./style";
 
@@ -88,28 +88,94 @@ export default function Task({ navigation, route }) {
         renderItem={({ item }) => {
           return (
             <View style={styles.Tasks}>
-              <TouchableOpacity
-                style={styles.deleteTasks}
-                onPress={() => deleteTask(item.id)}
-              >
-                <FontAwesome
-                  name="star"
-                  size={23}
-                  color="#f92e6a"
-                ></FontAwesome>
-              </TouchableOpacity>
-              <Text
-                style={styles.DescriptionTask}
-                onPress={() => {
-                  navigation.navigate("Details", {
-                    id: item.id,
-                    description: item.description,
-                    idUser: route.params.idUser,
-                  });
-                }}
-              >
-                {item.description}
-              </Text>
+              <View style={styles.TasksContainer}>
+                <View>
+                  <Text style={styles.mainTextTask}>{item.description}</Text>
+                </View>
+                <View style={styles.TasksContainerLineTwo}>
+                  <View>
+                    <Text>Esquerdo</Text>
+                    <View style={styles.TimerContainer}>
+                      <Text style={styles.DescriptionTask}>
+                        {item.esquerdo}:59
+                      </Text>
+                      <TouchableOpacity onPress={() => deleteTask(item.id)}>
+                        <Entypo
+                          name="controller-play"
+                          size={28}
+                          color="#f92e6a"
+                        />
+                      </TouchableOpacity>
+                    </View>
+
+                    <Text>Direito</Text>
+                    <View style={styles.TimerContainer}>
+                      <Text style={styles.DescriptionTask}>
+                        {item.direito}:59
+                      </Text>
+                      <TouchableOpacity onPress={() => deleteTask(item.id)}>
+                        <Entypo
+                          name="controller-play"
+                          size={28}
+                          color="#f92e6a"
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+
+                  <View>
+                    <Text>Frente</Text>
+                    <View style={styles.TimerContainer}>
+                      <Text style={styles.DescriptionTask}>
+                        {item.frente}:59
+                      </Text>
+                      <TouchableOpacity onPress={() => deleteTask(item.id)}>
+                        <Entypo
+                          name="controller-play"
+                          size={28}
+                          color="#f92e6a"
+                        />
+                      </TouchableOpacity>
+                    </View>
+
+                    <Text>Costas</Text>
+                    <View style={styles.TimerContainer}>
+                      <Text style={styles.DescriptionTask}>
+                        {item.costas}:59
+                      </Text>
+                      <TouchableOpacity onPress={() => deleteTask(item.id)}>
+                        <Entypo
+                          name="controller-play"
+                          size={28}
+                          color="#f92e6a"
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </View>
+
+              <View style={styles.ButtonsContainer}>
+                <TouchableOpacity onPress={() => deleteTask(item.id)}>
+                  <AntDesign name="delete" size={26} color="#f92e6a" />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.editTaskIcon}
+                  onPress={() => {
+                    navigation.navigate("Details", {
+                      id: item.id,
+                      description: item.description,
+                      frente: item.frente,
+                      costas: item.costas,
+                      esquerdo: item.esquerdo,
+                      direito: item.direito,
+                      idUser: route.params.idUser,
+                    });
+                  }}
+                >
+                  <AntDesign name="edit" size={26} color="#f92e6a" />
+                </TouchableOpacity>
+              </View>
             </View>
           );
         }}
