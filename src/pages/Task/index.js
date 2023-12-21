@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   collection,
   onSnapshot,
@@ -10,7 +10,7 @@ import {
 import { getAuth, signOut } from "firebase/auth";
 import { View, Text, TouchableOpacity, FlatList, Animated } from "react-native";
 import CountDown from "react-native-countdown-component";
-
+import Contador from "../../components/countdown";
 import app from "../../config/firebaseconfig";
 import { FontAwesome, Entypo, AntDesign } from "@expo/vector-icons";
 
@@ -20,10 +20,6 @@ export default function Task({ navigation, route }) {
   const [task, setTask] = useState([]);
   const [icon_1] = useState(new Animated.Value(1));
   const [icon_2] = useState(new Animated.Value(1));
-  const [timerPauseEsquerdo, setTimerPauseEsquerdo] = useState(false);
-  const [timerPauseDireito, setTimerPauseDireito] = useState(false);
-  const [timerPauseFrente, setTimerPauseFrente] = useState(false);
-  const [timerPauseCostas, setTimerPauseCostas] = useState(false);
 
   const [pop, setPop] = useState(false);
 
@@ -85,14 +81,6 @@ export default function Task({ navigation, route }) {
     await deleteDoc(doc(database, route.params.idUser, id));
   }
 
-  function stop(valorAtual) {
-    if (valorAtual === true) {
-      return true;
-    }
-
-    return false;
-  }
-
   return (
     <View style={styles.container}>
       <FlatList
@@ -109,96 +97,24 @@ export default function Task({ navigation, route }) {
                   <View>
                     <Text>Esquerdo</Text>
                     <View style={styles.TimerContainer}>
-                      <CountDown
-                        size={20}
-                        until={60 * item.esquerdo}
-                        onFinish={() => alert("Finished")}
-                        digitStyle={{
-                          backgroundColor: "#FFF",
-                          borderWidth: 2,
-                          borderColor: "#1CC625",
-                        }}
-                        digitTxtStyle={{ color: "#1CC625" }}
-                        timeLabelStyle={{ color: "red", fontWeight: "bold" }}
-                        separatorStyle={{ color: "#1CC625" }}
-                        timeToShow={["M", "S"]}
-                        timeLabels={{ m: null, s: null }}
-                        showSeparator
-                        onPress={() => {
-                          if (item.id === item.id) {
-                            setTimerPauseEsquerdo(!timerPauseEsquerdo);
-                          }
-                        }}
-                        running={timerPauseEsquerdo}
-                      />
+                      <Contador valor={item.esquerdo} />
                     </View>
 
                     <Text>Direito</Text>
                     <View style={styles.TimerContainer}>
-                      <CountDown
-                        size={20}
-                        until={60 * item.direito}
-                        onFinish={() => alert("Finished")}
-                        digitStyle={{
-                          backgroundColor: "#FFF",
-                          borderWidth: 2,
-                          borderColor: "#1CC625",
-                        }}
-                        digitTxtStyle={{ color: "#1CC625" }}
-                        timeLabelStyle={{ color: "red", fontWeight: "bold" }}
-                        separatorStyle={{ color: "#1CC625" }}
-                        timeToShow={["M", "S"]}
-                        timeLabels={{ m: null, s: null }}
-                        showSeparator
-                        onPress={() => setTimerPauseDireito(!timerPauseDireito)}
-                        running={timerPauseDireito}
-                      />
+                      <Contador valor={item.direito} />
                     </View>
                   </View>
 
                   <View>
                     <Text>Frente</Text>
                     <View style={styles.TimerContainer}>
-                      <CountDown
-                        size={20}
-                        until={60 * item.frente}
-                        onFinish={() => alert("Finished")}
-                        digitStyle={{
-                          backgroundColor: "#FFF",
-                          borderWidth: 2,
-                          borderColor: "#1CC625",
-                        }}
-                        digitTxtStyle={{ color: "#1CC625" }}
-                        timeLabelStyle={{ color: "red", fontWeight: "bold" }}
-                        separatorStyle={{ color: "#1CC625" }}
-                        timeToShow={["M", "S"]}
-                        timeLabels={{ m: null, s: null }}
-                        showSeparator
-                        onPress={() => setTimerPauseFrente(!timerPauseFrente)}
-                        running={timerPauseFrente}
-                      />
+                      <Contador valor={item.frente} />
                     </View>
 
                     <Text>Costas</Text>
                     <View style={styles.TimerContainer}>
-                      <CountDown
-                        size={20}
-                        until={60 * item.costas}
-                        onFinish={() => alert("Finished")}
-                        digitStyle={{
-                          backgroundColor: "#FFF",
-                          borderWidth: 2,
-                          borderColor: "#1CC625",
-                        }}
-                        digitTxtStyle={{ color: "#1CC625" }}
-                        timeLabelStyle={{ color: "red", fontWeight: "bold" }}
-                        separatorStyle={{ color: "#1CC625" }}
-                        timeToShow={["M", "S"]}
-                        timeLabels={{ m: null, s: null }}
-                        showSeparator
-                        onPress={() => setTimerPauseCostas(!timerPauseCostas)}
-                        running={timerPauseCostas}
-                      />
+                      <Contador valor={item.costas} />
                     </View>
                   </View>
                 </View>
