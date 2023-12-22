@@ -60,7 +60,7 @@ export default function Login({ navigation }) {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={styles.container}
     >
-      <Text style={styles.title}>Task</Text>
+      <Text style={styles.title}>Bela & Bronze</Text>
       <TextInput
         style={styles.input}
         placeholder="enter your email"

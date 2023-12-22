@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import {
   collection,
   onSnapshot,
@@ -9,10 +9,9 @@ import {
 } from "firebase/firestore";
 import { getAuth, signOut } from "firebase/auth";
 import { View, Text, TouchableOpacity, FlatList, Animated } from "react-native";
-import CountDown from "react-native-countdown-component";
-import Contador from "../../components/countdown";
+import CountDown from "../../components/Countdown";
 import app from "../../config/firebaseconfig";
-import { FontAwesome, Entypo, AntDesign } from "@expo/vector-icons";
+import { Entypo, AntDesign } from "@expo/vector-icons";
 
 import styles from "./style";
 
@@ -62,7 +61,6 @@ export default function Task({ navigation, route }) {
       .catch((error) => {
         // An error happened.
       });
-    console.log("teste");
   }
 
   useEffect(() => {
@@ -87,6 +85,22 @@ export default function Task({ navigation, route }) {
         showsVerticalScrollIndicator={false}
         data={task}
         renderItem={({ item }) => {
+          const timerEsquerdo = new Date();
+          timerEsquerdo.setSeconds(
+            timerEsquerdo.getSeconds() + 60 * item.esquerdo
+          );
+
+          const timerDireito = new Date();
+          timerDireito.setSeconds(
+            timerDireito.getSeconds() + 60 * item.direito
+          );
+
+          const timerFrente = new Date();
+          timerFrente.setSeconds(timerFrente.getSeconds() + 60 * item.frente);
+
+          const timerCostas = new Date();
+          timerCostas.setSeconds(timerCostas.getSeconds() + 60 * item.costas);
+
           return (
             <View style={styles.Tasks}>
               <View style={styles.TasksContainer}>
@@ -97,24 +111,24 @@ export default function Task({ navigation, route }) {
                   <View>
                     <Text>Esquerdo</Text>
                     <View style={styles.TimerContainer}>
-                      <Contador valor={item.esquerdo} />
+                      <CountDown expiryTimestamp={timerEsquerdo} />
                     </View>
 
                     <Text>Direito</Text>
                     <View style={styles.TimerContainer}>
-                      <Contador valor={item.direito} />
+                      <CountDown expiryTimestamp={timerDireito} />
                     </View>
                   </View>
 
                   <View>
                     <Text>Frente</Text>
                     <View style={styles.TimerContainer}>
-                      <Contador valor={item.frente} />
+                      <CountDown expiryTimestamp={timerFrente} />
                     </View>
 
                     <Text>Costas</Text>
                     <View style={styles.TimerContainer}>
-                      <Contador valor={item.costas} />
+                      <CountDown expiryTimestamp={timerCostas} />
                     </View>
                   </View>
                 </View>
