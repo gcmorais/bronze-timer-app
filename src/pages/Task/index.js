@@ -87,12 +87,12 @@ export default function Task({ navigation, route }) {
         renderItem={({ item }) => {
           const timerEsquerdo = new Date();
           timerEsquerdo.setSeconds(
-            timerEsquerdo.getSeconds() + 60 * item.esquerdo
+            timerEsquerdo.getSeconds() + 1 * item.esquerdo
           );
 
           const timerDireito = new Date();
           timerDireito.setSeconds(
-            timerDireito.getSeconds() + 60 * item.direito
+            timerDireito.getSeconds() + 0.2 * item.direito
           );
 
           const timerFrente = new Date();
@@ -111,24 +111,40 @@ export default function Task({ navigation, route }) {
                   <View>
                     <Text>Esquerdo</Text>
                     <View style={styles.TimerContainer}>
-                      <CountDown expiryTimestamp={timerEsquerdo} />
+                      <CountDown
+                        expiryTimestamp={timerEsquerdo}
+                        user={item.description}
+                        lado="lado esquerdo"
+                      />
                     </View>
 
                     <Text>Direito</Text>
                     <View style={styles.TimerContainer}>
-                      <CountDown expiryTimestamp={timerDireito} />
+                      <CountDown
+                        expiryTimestamp={timerDireito}
+                        user={item.description}
+                        lado="lado direito"
+                      />
                     </View>
                   </View>
 
                   <View>
                     <Text>Frente</Text>
                     <View style={styles.TimerContainer}>
-                      <CountDown expiryTimestamp={timerFrente} />
+                      <CountDown
+                        expiryTimestamp={timerFrente}
+                        user={item.description}
+                        lado="frente"
+                      />
                     </View>
 
                     <Text>Costas</Text>
                     <View style={styles.TimerContainer}>
-                      <CountDown expiryTimestamp={timerCostas} />
+                      <CountDown
+                        expiryTimestamp={timerCostas}
+                        user={item.description}
+                        lado="costas"
+                      />
                     </View>
                   </View>
                 </View>

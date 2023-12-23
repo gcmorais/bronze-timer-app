@@ -1,14 +1,35 @@
 import React from "react";
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  Vibration,
+  Alert,
+} from "react-native";
 
 import { useTimer } from "react-timer-hook";
 
-export default function Countdown({ expiryTimestamp }) {
+export default function Countdown({ expiryTimestamp, user, lado }) {
   const { seconds, minutes, start, pause, isRunning } = useTimer({
     expiryTimestamp,
     autoStart: false,
-    onExpire: () => alert("Expirou"),
+    onExpire: () => finished(),
   });
+
+  const PATTERN = [100, 243, 541, 1000, 534];
+
+  const finished = () => {
+    Vibration.vibrate(PATTERN, true);
+    Alert.alert("Alerta", `${user} finalizou o ${lado}`, [
+      {
+        text: "Cancelar",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel",
+      },
+      { text: "OK", onPress: () => Vibration.cancel() },
+    ]);
+  };
 
   return (
     <>
