@@ -101,6 +101,11 @@ export default function Task({ navigation, route }) {
           const timerCostas = new Date();
           timerCostas.setSeconds(timerCostas.getSeconds() + 60 * item.costas);
 
+          const timerSentado = new Date();
+          timerSentado.setSeconds(
+            timerSentado.getSeconds() + 60 * item.sentado
+          );
+
           return (
             <View style={styles.Tasks}>
               <View style={styles.TasksContainer}>
@@ -109,6 +114,15 @@ export default function Task({ navigation, route }) {
                 </View>
                 <View style={styles.TasksContainerLineTwo}>
                   <View>
+                    <Text>Sentado</Text>
+                    <View style={styles.TimerContainer}>
+                      <CountDown
+                        expiryTimestamp={timerSentado}
+                        user={item.description}
+                        lado="sentado"
+                      />
+                    </View>
+
                     <Text>Esquerdo</Text>
                     <View style={styles.TimerContainer}>
                       <CountDown
@@ -164,6 +178,7 @@ export default function Task({ navigation, route }) {
                       costas: item.costas,
                       esquerdo: item.esquerdo,
                       direito: item.direito,
+                      sentado: item.sentado,
                       idUser: route.params.idUser,
                     });
                   }}

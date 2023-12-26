@@ -13,15 +13,25 @@ export default function NewTask({ navigation, route }) {
   const [editDireito, setEditDireito] = useState(route.params.direito);
   const [editFrente, setEditFrente] = useState(route.params.frente);
   const [editCostas, setEditCostas] = useState(route.params.costas);
+  const [editSentado, setEditSentado] = useState(route.params.sentado);
 
   const idTask = route.params.id;
   const database = getFirestore(app);
 
-  async function editTask(description, esquerdo, direito, costas, frente, id) {
+  async function editTask(
+    description,
+    sentado,
+    esquerdo,
+    direito,
+    costas,
+    frente,
+    id
+  ) {
     const taskRef = doc(database, route.params.idUser, id);
 
     await updateDoc(taskRef, {
       description: editDescription,
+      sentado: editSentado,
       esquerdo: editEsquerdo,
       direito: editDireito,
       frente: editFrente,
@@ -32,6 +42,8 @@ export default function NewTask({ navigation, route }) {
     navigation.navigate("Task", { idUser: route.params.idUser });
   }
 
+  console.log(editSentado);
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Description</Text>
@@ -41,6 +53,17 @@ export default function NewTask({ navigation, route }) {
         onChangeText={setEditDescription}
         value={editDescription}
       />
+
+      <Text style={styles.label}>Sentado</Text>
+      <TextInput
+        style={styles.inputText}
+        keyboardType="numeric"
+        onChangeText={setEditSentado}
+        value={editSentado}
+        placeholder="Digitar valor em minutos"
+        maxLength={2} //setting limit of input
+      />
+
       <Text style={styles.label}>Lado Esquerdo</Text>
       <TextInput
         style={styles.inputText}
@@ -89,6 +112,7 @@ export default function NewTask({ navigation, route }) {
             editDireito,
             editCostas,
             editFrente,
+            editSentado,
             idTask
           );
         }}
