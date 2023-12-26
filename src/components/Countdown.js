@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -7,6 +7,8 @@ import {
   Vibration,
   Alert,
 } from "react-native";
+
+import { Audio } from "expo-av";
 
 import { useTimer } from "react-timer-hook";
 
@@ -17,19 +19,38 @@ export default function Countdown({ expiryTimestamp, user, lado }) {
     onExpire: () => finished(),
   });
 
+  const [sound, setSound] = useState(new Audio.Sound());
+
   const PATTERN = [100, 243, 541, 1000, 534];
 
-  const finished = () => {
+  const stop = () => {
+    Vibration.cancel();
+    setSound(undefined);
+  };
+
+  const finished = async () => {
     Vibration.vibrate(PATTERN, true);
+    const { sound } = await Audio.Sound.createAsync(require("../res/Song.mp3"));
+    setSound(sound);
+    await sound.playAsync();
+
     Alert.alert("Alerta", `${user} finalizou o ${lado}`, [
       {
         text: "Cancelar",
         onPress: () => console.log("Cancel Pressed"),
         style: "cancel",
       },
-      { text: "OK", onPress: () => Vibration.cancel() },
+      { text: "OK", onPress: () => stop() },
     ]);
   };
+
+  useEffect(() => {
+    return sound
+      ? () => {
+          sound.unloadAsync();
+        }
+      : undefined;
+  }, [sound]);
 
   return (
     <>
