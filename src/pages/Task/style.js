@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   TasksContainer: {
-    width: "80%",
+    width: "100%",
   },
   TasksContainerLineTwo: {
     width: "100%",
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   editTaskIcon: {
-    marginTop: 30,
+    marginLeft: 30,
   },
   DescriptionTask: {
     color: "#000",
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
   mainTextTask: {
     color: "#000",
     fontSize: 25,
+    width: "70%",
   },
   TimerContainer: {
     flexDirection: "row",
@@ -60,8 +61,13 @@ const styles = StyleSheet.create({
     marginTop: 2,
   },
   ButtonsContainer: {
+    flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
+  },
+  TasksHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 });
 

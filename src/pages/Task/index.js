@@ -87,12 +87,12 @@ export default function Task({ navigation, route }) {
         renderItem={({ item }) => {
           const timerEsquerdo = new Date();
           timerEsquerdo.setSeconds(
-            timerEsquerdo.getSeconds() + 1 * item.esquerdo
+            timerEsquerdo.getSeconds() + 60 * item.esquerdo
           );
 
           const timerDireito = new Date();
           timerDireito.setSeconds(
-            timerDireito.getSeconds() + 0.2 * item.direito
+            timerDireito.getSeconds() + 60 * item.direito
           );
 
           const timerFrente = new Date();
@@ -109,8 +109,30 @@ export default function Task({ navigation, route }) {
           return (
             <View style={styles.Tasks}>
               <View style={styles.TasksContainer}>
-                <View>
+                <View style={styles.TasksHeader}>
                   <Text style={styles.mainTextTask}>{item.description}</Text>
+                  <View style={styles.ButtonsContainer}>
+                    <TouchableOpacity onPress={() => deleteTask(item.id)}>
+                      <AntDesign name="delete" size={26} color="#f92e6a" />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.editTaskIcon}
+                      onPress={() => {
+                        navigation.navigate("Details", {
+                          id: item.id,
+                          description: item.description,
+                          frente: item.frente,
+                          costas: item.costas,
+                          esquerdo: item.esquerdo,
+                          direito: item.direito,
+                          sentado: item.sentado,
+                          idUser: route.params.idUser,
+                        });
+                      }}
+                    >
+                      <AntDesign name="edit" size={26} color="#f92e6a" />
+                    </TouchableOpacity>
+                  </View>
                 </View>
                 <View style={styles.TasksContainerLineTwo}>
                   <View>
@@ -120,6 +142,7 @@ export default function Task({ navigation, route }) {
                         expiryTimestamp={timerSentado}
                         user={item.description}
                         lado="sentado"
+                        valor={item.sentado}
                       />
                     </View>
 
@@ -129,6 +152,7 @@ export default function Task({ navigation, route }) {
                         expiryTimestamp={timerEsquerdo}
                         user={item.description}
                         lado="lado esquerdo"
+                        valor={item.esquerdo}
                       />
                     </View>
 
@@ -138,6 +162,7 @@ export default function Task({ navigation, route }) {
                         expiryTimestamp={timerDireito}
                         user={item.description}
                         lado="lado direito"
+                        valor={item.direito}
                       />
                     </View>
                   </View>
@@ -149,6 +174,7 @@ export default function Task({ navigation, route }) {
                         expiryTimestamp={timerFrente}
                         user={item.description}
                         lado="frente"
+                        valor={item.frente}
                       />
                     </View>
 
@@ -158,33 +184,11 @@ export default function Task({ navigation, route }) {
                         expiryTimestamp={timerCostas}
                         user={item.description}
                         lado="costas"
+                        valor={item.costas}
                       />
                     </View>
                   </View>
                 </View>
-              </View>
-
-              <View style={styles.ButtonsContainer}>
-                <TouchableOpacity onPress={() => deleteTask(item.id)}>
-                  <AntDesign name="delete" size={26} color="#f92e6a" />
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={styles.editTaskIcon}
-                  onPress={() => {
-                    navigation.navigate("Details", {
-                      id: item.id,
-                      description: item.description,
-                      frente: item.frente,
-                      costas: item.costas,
-                      esquerdo: item.esquerdo,
-                      direito: item.direito,
-                      sentado: item.sentado,
-                      idUser: route.params.idUser,
-                    });
-                  }}
-                >
-                  <AntDesign name="edit" size={26} color="#f92e6a" />
-                </TouchableOpacity>
               </View>
             </View>
           );

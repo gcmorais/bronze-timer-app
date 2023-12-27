@@ -7,17 +7,24 @@ import {
   Vibration,
   Alert,
 } from "react-native";
+import { AntDesign } from "@expo/vector-icons";
 
 import { Audio } from "expo-av";
 
 import { useTimer } from "react-timer-hook";
 
-export default function Countdown({ expiryTimestamp, user, lado }) {
-  const { seconds, minutes, pause, resume, isRunning } = useTimer({
+export default function Countdown({ expiryTimestamp, user, lado, valor }) {
+  const { seconds, minutes, pause, resume, isRunning, restart } = useTimer({
     expiryTimestamp,
     autoStart: false,
     onExpire: () => finished(),
   });
+
+  function handleSubmit() {
+    const time = new Date();
+    time.setSeconds(time.getSeconds() + 60 * valor);
+    restart(time, false);
+  }
 
   const [sound, setSound] = useState(new Audio.Sound());
 
@@ -62,6 +69,9 @@ export default function Countdown({ expiryTimestamp, user, lado }) {
               {seconds < 10 ? "0" + seconds : seconds}
             </Text>
           </TouchableOpacity>
+          <Text onPress={handleSubmit} style={styles.timerIcon}>
+            <AntDesign name="reload1" size={25} color="#A9A9A9" />
+          </Text>
         </View>
       ) : (
         <View style={styles.container}>
@@ -78,6 +88,9 @@ export default function Countdown({ expiryTimestamp, user, lado }) {
               </Text>
             )}
           </TouchableOpacity>
+          <Text onPress={handleSubmit} style={styles.timerIcon}>
+            <AntDesign name="reload1" size={25} color="#A9A9A9" />
+          </Text>
         </View>
       )}
     </>
@@ -88,6 +101,9 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#eaeaea",
     borderRadius: 10,
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
   },
   timerDefault: {
     fontSize: 40,
@@ -108,5 +124,8 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     color: "#3CB371",
     textDecorationLine: "line-through",
+  },
+  timerIcon: {
+    marginRight: 10,
   },
 });
