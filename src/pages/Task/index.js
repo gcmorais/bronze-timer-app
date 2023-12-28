@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   collection,
   onSnapshot,
@@ -12,6 +12,7 @@ import { View, Text, TouchableOpacity, FlatList, Animated } from "react-native";
 import CountDown from "../../components/Countdown";
 import app from "../../config/firebaseconfig";
 import { Entypo, AntDesign } from "@expo/vector-icons";
+import { Modalize } from "react-native-modalize";
 
 import styles from "./style";
 
@@ -19,6 +20,9 @@ export default function Task({ navigation, route }) {
   const [task, setTask] = useState([]);
   const [icon_1] = useState(new Animated.Value(1));
   const [icon_2] = useState(new Animated.Value(1));
+  const [aberto, setAberto] = useState();
+  const [id, setId] = useState();
+  const [nome, setNome] = useState("");
 
   const [pop, setPop] = useState(false);
 
@@ -77,7 +81,24 @@ export default function Task({ navigation, route }) {
 
   async function deleteTask(id) {
     await deleteDoc(doc(database, route.params.idUser, id));
+    onClose();
   }
+
+  const modalizeRef = useRef(null);
+
+  const onOpen = (id, description) => {
+    setAberto(true);
+    setNome(description);
+    setId(id);
+    modalizeRef.current?.open();
+  };
+
+  const onClose = () => {
+    setAberto(false);
+    modalizeRef.current?.close();
+  };
+
+  //
 
   return (
     <View style={styles.container}>
@@ -106,94 +127,145 @@ export default function Task({ navigation, route }) {
             timerSentado.getSeconds() + 60 * item.sentado
           );
 
+          // setId(item.id);
+          // setNome(item.description);
+
           return (
-            <View style={styles.Tasks}>
-              <View style={styles.TasksContainer}>
-                <View style={styles.TasksHeader}>
-                  <Text style={styles.mainTextTask}>{item.description}</Text>
-                  <View style={styles.ButtonsContainer}>
-                    <TouchableOpacity onPress={() => deleteTask(item.id)}>
-                      <AntDesign name="delete" size={26} color="#f92e6a" />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.editTaskIcon}
-                      onPress={() => {
-                        navigation.navigate("Details", {
-                          id: item.id,
-                          description: item.description,
-                          frente: item.frente,
-                          costas: item.costas,
-                          esquerdo: item.esquerdo,
-                          direito: item.direito,
-                          sentado: item.sentado,
-                          idUser: route.params.idUser,
-                        });
-                      }}
-                    >
-                      <AntDesign name="edit" size={26} color="#f92e6a" />
-                    </TouchableOpacity>
-                  </View>
-                </View>
-                <View style={styles.TasksContainerLineTwo}>
-                  <View>
-                    <Text>Sentado</Text>
-                    <View style={styles.TimerContainer}>
-                      <CountDown
-                        expiryTimestamp={timerSentado}
-                        user={item.description}
-                        lado="sentado"
-                        valor={item.sentado}
-                      />
-                    </View>
+            <>
+              <View style={styles.Tasks}>
+                <View style={styles.TasksContainer}>
+                  <View style={styles.TasksHeader}>
+                    <Text style={styles.mainTextTask}>{item.description}</Text>
+                    <View style={styles.ButtonsContainer}>
+                      <TouchableOpacity onPress={() => deleteTask(id)}>
+                        <AntDesign name="delete" size={26} color="#f92e6a" />
+                      </TouchableOpacity>
 
-                    <Text>Esquerdo</Text>
-                    <View style={styles.TimerContainer}>
-                      <CountDown
-                        expiryTimestamp={timerEsquerdo}
-                        user={item.description}
-                        lado="lado esquerdo"
-                        valor={item.esquerdo}
-                      />
-                    </View>
-
-                    <Text>Direito</Text>
-                    <View style={styles.TimerContainer}>
-                      <CountDown
-                        expiryTimestamp={timerDireito}
-                        user={item.description}
-                        lado="lado direito"
-                        valor={item.direito}
-                      />
+                      <TouchableOpacity
+                        style={styles.editTaskIcon}
+                        onPress={() => {
+                          navigation.navigate("Details", {
+                            id: item.id,
+                            description: item.description,
+                            frente: item.frente,
+                            costas: item.costas,
+                            esquerdo: item.esquerdo,
+                            direito: item.direito,
+                            sentado: item.sentado,
+                            idUser: route.params.idUser,
+                          });
+                        }}
+                      >
+                        <AntDesign name="edit" size={26} color="#f92e6a" />
+                      </TouchableOpacity>
                     </View>
                   </View>
+                  <View style={styles.TasksContainerLineTwo}>
+                    <View>
+                      <Text>Sentado</Text>
+                      <View style={styles.TimerContainer}>
+                        <CountDown
+                          expiryTimestamp={timerSentado}
+                          user={item.description}
+                          lado="sentado"
+                          valor={item.sentado}
+                        />
+                      </View>
 
-                  <View>
-                    <Text>Frente</Text>
-                    <View style={styles.TimerContainer}>
-                      <CountDown
-                        expiryTimestamp={timerFrente}
-                        user={item.description}
-                        lado="frente"
-                        valor={item.frente}
-                      />
+                      <Text>Esquerdo</Text>
+                      <View style={styles.TimerContainer}>
+                        <CountDown
+                          expiryTimestamp={timerEsquerdo}
+                          user={item.description}
+                          lado="lado esquerdo"
+                          valor={item.esquerdo}
+                        />
+                      </View>
+
+                      <Text>Direito</Text>
+                      <View style={styles.TimerContainer}>
+                        <CountDown
+                          expiryTimestamp={timerDireito}
+                          user={item.description}
+                          lado="lado direito"
+                          valor={item.direito}
+                        />
+                      </View>
                     </View>
 
-                    <Text>Costas</Text>
-                    <View style={styles.TimerContainer}>
-                      <CountDown
-                        expiryTimestamp={timerCostas}
-                        user={item.description}
-                        lado="costas"
-                        valor={item.costas}
-                      />
+                    <View>
+                      <Text>Frente</Text>
+                      <View style={styles.TimerContainer}>
+                        <CountDown
+                          expiryTimestamp={timerFrente}
+                          user={item.description}
+                          lado="frente"
+                          valor={item.frente}
+                        />
+                      </View>
+
+                      <Text>Costas</Text>
+                      <View style={styles.TimerContainer}>
+                        <CountDown
+                          expiryTimestamp={timerCostas}
+                          user={item.description}
+                          lado="costas"
+                          valor={item.costas}
+                        />
+                      </View>
                     </View>
                   </View>
                 </View>
               </View>
-            </View>
+            </>
           );
         }}
       />
+
+      {/* <Modalize ref={modalizeRef} snapPoint={300} modalTopOffset={200}>
+        <View style={{ padding: 30 }}>
+          <Text style={{ fontSize: 30 }}>
+            Tem certeza que deseja excluir {nome} ?
+          </Text>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "center",
+              marginTop: 50,
+            }}
+          >
+            <TouchableOpacity style={{ marginRight: 50 }} onPress={onClose}>
+              <Text style={{ fontSize: 30, opacity: 0.5 }}>Cancelar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => deleteTask(id)}>
+              <Text style={{ fontSize: 30, color: "#ff0000" }}>Deletar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modalize> */}
+
+      <Modalize ref={modalizeRef} snapPoint={300} modalTopOffset={200}>
+        <View style={{ padding: 30 }}>
+          <Text style={{ fontSize: 30 }}>Tem certeza que sair ?</Text>
+          <View
+            style={{
+              width: "100%",
+              flexDirection: "row",
+              justifyContent: "center",
+              marginTop: 50,
+            }}
+          >
+            <TouchableOpacity style={{ marginRight: 50 }} onPress={onClose}>
+              <Text style={{ fontSize: 30, opacity: 0.5 }}>Cancelar</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => logout()}>
+              <Text style={{ fontSize: 30, color: "#ff0000" }}>Sair</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modalize>
+
       <Animated.View style={{ bottom: icon_2 }}>
         <TouchableOpacity
           style={styles.button}
@@ -206,7 +278,10 @@ export default function Task({ navigation, route }) {
       </Animated.View>
 
       <Animated.View style={{ bottom: icon_1 }}>
-        <TouchableOpacity style={styles.button} onPress={() => logout()}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={aberto ? onClose : onOpen}
+        >
           <Entypo name="log-out" size={24} color="white" />
         </TouchableOpacity>
       </Animated.View>
