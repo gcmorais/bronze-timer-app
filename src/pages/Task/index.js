@@ -121,9 +121,6 @@ export default function Task({ navigation, route }) {
             timerSentado.getSeconds() + 60 * item.sentado
           );
 
-          // setId(item.id);
-          // setNome(item.description);
-
           return (
             <>
               <View style={styles.Tasks}>
