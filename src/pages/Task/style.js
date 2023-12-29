@@ -69,6 +69,11 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  DeleteTasksContainer: {
+    width: "100%",
+    paddingTop: 50,
+    paddingBottom: 50,
+  },
 });
 
 export default styles;
