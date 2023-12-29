@@ -21,8 +21,6 @@ export default function Task({ navigation, route }) {
   const [icon_1] = useState(new Animated.Value(1));
   const [icon_2] = useState(new Animated.Value(1));
   const [aberto, setAberto] = useState();
-  const [id, setId] = useState();
-  const [nome, setNome] = useState("");
 
   const [pop, setPop] = useState(false);
 
@@ -86,10 +84,8 @@ export default function Task({ navigation, route }) {
 
   const modalizeRef = useRef(null);
 
-  const onOpen = (id, description) => {
+  const onOpen = () => {
     setAberto(true);
-    setNome(description);
-    setId(id);
     modalizeRef.current?.open();
   };
 
@@ -97,8 +93,6 @@ export default function Task({ navigation, route }) {
     setAberto(false);
     modalizeRef.current?.close();
   };
-
-  //
 
   return (
     <View style={styles.container}>
@@ -137,7 +131,7 @@ export default function Task({ navigation, route }) {
                   <View style={styles.TasksHeader}>
                     <Text style={styles.mainTextTask}>{item.description}</Text>
                     <View style={styles.ButtonsContainer}>
-                      <TouchableOpacity onPress={() => deleteTask(id)}>
+                      <TouchableOpacity onPress={() => deleteTask(item.id)}>
                         <AntDesign name="delete" size={26} color="#f92e6a" />
                       </TouchableOpacity>
 
@@ -221,29 +215,6 @@ export default function Task({ navigation, route }) {
           );
         }}
       />
-
-      {/* <Modalize ref={modalizeRef} snapPoint={300} modalTopOffset={200}>
-        <View style={{ padding: 30 }}>
-          <Text style={{ fontSize: 30 }}>
-            Tem certeza que deseja excluir {nome} ?
-          </Text>
-          <View
-            style={{
-              width: "100%",
-              flexDirection: "row",
-              justifyContent: "center",
-              marginTop: 50,
-            }}
-          >
-            <TouchableOpacity style={{ marginRight: 50 }} onPress={onClose}>
-              <Text style={{ fontSize: 30, opacity: 0.5 }}>Cancelar</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => deleteTask(id)}>
-              <Text style={{ fontSize: 30, color: "#ff0000" }}>Deletar</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-      </Modalize> */}
 
       <Modalize ref={modalizeRef} snapPoint={300} modalTopOffset={200}>
         <View style={{ padding: 30 }}>
