@@ -12,6 +12,7 @@ import { View, Text, TouchableOpacity, FlatList, Animated } from "react-native";
 import CountDown from "../../components/Countdown";
 import app from "../../config/firebaseconfig";
 import { Entypo, AntDesign } from "@expo/vector-icons";
+
 import { Modalize } from "react-native-modalize";
 
 import styles from "./style";
@@ -127,7 +128,24 @@ export default function Task({ navigation, route }) {
         <Loading />
       ) : (
         <View style={styles.container}>
-          <View style={styles.header}></View>
+          <View style={styles.header}>
+            <TouchableOpacity
+              style={styles.buttonA}
+              onPress={() =>
+                navigation.navigate("New Task", {
+                  idUser: route.params.idUser,
+                })
+              }
+            >
+              <Text style={styles.iconButton}>+</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.buttonB}
+              onPress={aberto ? onClose : onOpen}
+            >
+              <AntDesign name="ellipsis1" size={44} color="rgba(58,58,58, 1)" />
+            </TouchableOpacity>
+          </View>
           <FlatList
             showsVerticalScrollIndicator={false}
             data={task}
@@ -184,12 +202,12 @@ export default function Task({ navigation, route }) {
                               style={{ fontSize: 30, opacity: 0.5 }}
                               onPress={() => onCloseDelete()}
                             >
-                              Cancelar
+                              cancelar
                             </Text>
                           </TouchableOpacity>
                           <TouchableOpacity onPress={() => deleteTask(item.id)}>
                             <Text style={{ fontSize: 30, color: "#ff0000" }}>
-                              Apagar
+                              apagar
                             </Text>
                           </TouchableOpacity>
                         </View>
@@ -309,41 +327,14 @@ export default function Task({ navigation, route }) {
                 }}
               >
                 <TouchableOpacity style={{ marginRight: 50 }} onPress={onClose}>
-                  <Text style={{ fontSize: 30, opacity: 0.5 }}>Cancelar</Text>
+                  <Text style={{ fontSize: 30, opacity: 0.5 }}>cancelar</Text>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={() => logout()}>
-                  <Text style={{ fontSize: 30, color: "#ff0000" }}>Sair</Text>
+                  <Text style={{ fontSize: 30, color: "#ff0000" }}>sair</Text>
                 </TouchableOpacity>
               </View>
             </View>
           </Modalize>
-
-          <Animated.View style={{ bottom: icon_2 }}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() =>
-                navigation.navigate("New Task", { idUser: route.params.idUser })
-              }
-            >
-              <Text style={styles.iconButton}>+</Text>
-            </TouchableOpacity>
-          </Animated.View>
-
-          <Animated.View style={{ bottom: icon_1 }}>
-            <TouchableOpacity
-              style={styles.button}
-              onPress={aberto ? onClose : onOpen}
-            >
-              <Entypo name="log-out" size={24} color="white" />
-            </TouchableOpacity>
-          </Animated.View>
-
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => (pop === false ? popIn() : popOut())}
-          >
-            <Entypo name="menu" size={24} color="white" />
-          </TouchableOpacity>
         </View>
       )}
     </>
