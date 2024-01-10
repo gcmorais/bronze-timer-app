@@ -6,8 +6,11 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     paddingTop: 20,
   },
+  header: {
+    marginTop: 50,
+  },
   button: {
-    backgroundColor: "#f92e6a",
+    backgroundColor: "#4787A7",
     width: 60,
     height: 60,
     position: "absolute",

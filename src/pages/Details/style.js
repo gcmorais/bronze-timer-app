@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     fontSize: 16,
     marginLeft: 20,
-    color: "#F92E6A",
+    color: "#4787A7",
   },
   inputText: {
     width: "90%",
@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     marginRight: "auto",
     padding: 10,
     borderBottomWidth: 1,
-    borderBottomColor: "#F92E6A",
+    borderBottomColor: "#4787A7",
   },
   buttonNewTask: {
     width: 60,
@@ -28,14 +28,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 30,
     left: 20,
-    backgroundColor: "#f92e6a",
+    backgroundColor: "#4787A7",
     borderRadius: 50,
     justifyContent: "center",
     alignItems: "center",
   },
   iconButton: {
     color: "#ffffff",
-    fontSize: 15,
+    fontSize: 12,
     fontWeight: "bold",
   },
 });

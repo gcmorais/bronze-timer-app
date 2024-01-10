@@ -52,7 +52,7 @@ export default function NewTask({ navigation, route }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
-        <Text style={styles.label}>Description</Text>
+        <Text style={styles.label}>Nome do(a) cliente</Text>
         <TextInput
           style={styles.inputText}
           placeholder="Ex: estudar javascript"
@@ -123,7 +123,7 @@ export default function NewTask({ navigation, route }) {
             );
           }}
         >
-          <Text style={styles.iconButton}>Save</Text>
+          <Text style={styles.iconButton}>Salvar</Text>
         </TouchableOpacity>
       </View>
     </TouchableWithoutFeedback>

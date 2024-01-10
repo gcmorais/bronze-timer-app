@@ -37,7 +37,7 @@ export default function NewTask({ navigation, route }) {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View style={styles.container}>
-        <Text style={styles.label}>Descrição</Text>
+        <Text style={styles.label}>Nome do(a) cliente</Text>
         <TextInput
           style={styles.inputText}
           placeholder="Ex: Nome do(a) cliente"
