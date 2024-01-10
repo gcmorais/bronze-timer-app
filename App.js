@@ -24,9 +24,8 @@ export default function App() {
           name="Task"
           component={Task}
           options={{
-            headerTintColor: "#F92E6A",
             headerTitleAlign: "left",
-            headerTitle: "Bela & Bronze",
+            headerShown: false,
             headerLeft: null,
           }}
         />
@@ -35,7 +34,7 @@ export default function App() {
           component={NewTask}
           options={{
             headerTitle: "Adicionar",
-            headerTintColor: "#F92E6A",
+            headerTintColor: "#4787A7",
             headerBackTitle: "voltar",
           }}
         />
@@ -43,7 +42,8 @@ export default function App() {
           name="Details"
           component={Details}
           options={{
-            headerTintColor: "#F92E6A",
+            headerTitle: "Detalhes",
+            headerTintColor: "#4787A7",
             headerBackTitle: "voltar",
           }}
         />
