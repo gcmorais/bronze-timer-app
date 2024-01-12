@@ -114,8 +114,10 @@ export default function Task({ navigation, route }) {
     modalizeRef.current?.close();
   };
 
-  const onOpenDelete = () => {
+  const onOpenDelete = (id) => {
     setAbertoDelete(true);
+    console.log(id);
+    // falta finalizar aqui.
   };
 
   const onCloseDelete = () => {
@@ -219,7 +221,9 @@ export default function Task({ navigation, route }) {
                             {item.description}
                           </Text>
                           <View style={styles.ButtonsContainer}>
-                            <TouchableOpacity onPress={() => onOpenDelete()}>
+                            <TouchableOpacity
+                              onPress={() => onOpenDelete(item.id)}
+                            >
                               <AntDesign
                                 name="delete"
                                 size={26}
