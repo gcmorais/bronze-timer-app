@@ -25,8 +25,8 @@ const styles = StyleSheet.create({
   buttonNewTask: {
     width: 60,
     height: 60,
-    position: "absolute",
-    bottom: 30,
+    top: 20,
+    marginBottom: 40,
     left: 20,
     backgroundColor: "#4787A7",
     borderRadius: 50,

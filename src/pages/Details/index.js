@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import {
-  View,
+  ScrollView,
   Text,
   TextInput,
   TouchableOpacity,
@@ -51,7 +51,7 @@ export default function NewTask({ navigation, route }) {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Text style={styles.label}>Nome do(a) cliente</Text>
         <TextInput
           style={styles.inputText}
@@ -125,7 +125,7 @@ export default function NewTask({ navigation, route }) {
         >
           <Text style={styles.iconButton}>Salvar</Text>
         </TouchableOpacity>
-      </View>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 }

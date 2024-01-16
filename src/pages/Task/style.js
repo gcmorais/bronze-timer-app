@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   header: {
-    marginTop: 60,
+    marginTop: Platform.OS === "ios" ? 60 : 50,
     width: "100%",
     flexDirection: "row",
     justifyContent: "space-between",
