@@ -4,19 +4,29 @@ import {
   StyleSheet,
   ActivityIndicator,
   View,
+  StatusBar,
 } from "react-native";
 
 export default function index() {
   return (
-    <View style={styles.container}>
-      <ImageBackground
-        source={require("../../../assets/Spinner.png")}
-        resizeMode="cover"
-        style={styles.image}
-      >
-        <ActivityIndicator size="large" color="#ffffff" />
-      </ImageBackground>
-    </View>
+    <>
+      <StatusBar
+        barStyle="light-content"
+        hidden={false}
+        backgroundColor="#000000"
+        translucent={false}
+        networkActivityIndicatorVisible={true}
+      />
+      <View style={styles.container}>
+        <ImageBackground
+          source={require("../../../assets/Spinner.png")}
+          resizeMode="cover"
+          style={styles.image}
+        >
+          <ActivityIndicator size="large" color="#ffffff" />
+        </ImageBackground>
+      </View>
+    </>
   );
 }
 

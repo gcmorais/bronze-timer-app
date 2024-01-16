@@ -16,6 +16,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   ImageBackground,
+  StatusBar,
 } from "react-native";
 
 import app from "../../config/firebaseconfig";
@@ -58,6 +59,13 @@ export default function Login({ navigation }) {
 
   return (
     <>
+      <StatusBar
+        barStyle="light-content"
+        hidden={false}
+        backgroundColor="#000000"
+        translucent={false}
+        networkActivityIndicatorVisible={true}
+      />
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={styles.container}
