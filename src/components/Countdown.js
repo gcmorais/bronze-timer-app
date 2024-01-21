@@ -16,6 +16,7 @@ Notifications.setNotificationHandler({
     shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: false,
+    priority: "high",
   }),
 });
 
@@ -30,10 +31,26 @@ export default function Countdown({ expiryTimestamp, user, lado, valor }) {
     onExpire: () => finished(),
   });
 
+  // console.log(minutes);
+  // console.log(seconds);
+
   function handleSubmit() {
     const time = new Date();
     time.setSeconds(time.getSeconds() + 60 * valor);
     restart(time, false);
+  }
+
+  if (minutes === 0 && seconds === 0) {
+    handleCallNotification();
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: `${user} está pronta!!`,
+        body: `O lado ${lado} foi finalizado.`,
+      },
+      trigger: {
+        seconds: 1,
+      },
+    });
   }
 
   const [sound, setSound] = useState(new Audio.Sound());
@@ -66,17 +83,6 @@ export default function Countdown({ expiryTimestamp, user, lado, valor }) {
     const { sound } = await Audio.Sound.createAsync(require("../res/Song.mp3"));
     setSound(sound);
     await sound.playAsync();
-    handleCallNotification();
-
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: `${user} está pronta!!`,
-        body: `O lado ${lado} foi finalizado.`,
-      },
-      trigger: {
-        seconds: 2,
-      },
-    });
 
     Alert.alert("Alerta", `${user} finalizou o ${lado}`, [
       {

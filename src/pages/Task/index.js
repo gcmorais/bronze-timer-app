@@ -181,9 +181,7 @@ export default function Task({ navigation, route }) {
                 );
 
                 const timerSentado = new Date();
-                timerSentado.setSeconds(
-                  timerSentado.getSeconds() + 60 * item.sentado
-                );
+                timerSentado.setSeconds(timerSentado.getSeconds() + 60 * 0.1);
 
                 return (
                   <>
