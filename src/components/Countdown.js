@@ -40,19 +40,6 @@ export default function Countdown({ expiryTimestamp, user, lado, valor }) {
     restart(time, false);
   }
 
-  if (minutes === 0 && seconds === 0) {
-    handleCallNotification();
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: `${user} está pronta!!`,
-        body: `O lado ${lado} foi finalizado.`,
-      },
-      trigger: {
-        seconds: 1,
-      },
-    });
-  }
-
   const [sound, setSound] = useState(new Audio.Sound());
 
   const PATTERN = [100, 243, 541, 1000, 534];
@@ -92,6 +79,17 @@ export default function Countdown({ expiryTimestamp, user, lado, valor }) {
       },
       { text: "OK", onPress: () => stop() },
     ]);
+
+    handleCallNotification();
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: `${user} está pronta!!`,
+        body: `O lado ${lado} foi finalizado.`,
+      },
+      trigger: {
+        seconds: 1,
+      },
+    });
   };
 
   useEffect(() => {
