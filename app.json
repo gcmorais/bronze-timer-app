@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.g1hrm.bbapp"
+      "package": "com.g1hrm.bronzetimer"
     },
     "web": {
       "favicon": "./assets/favicon.png"

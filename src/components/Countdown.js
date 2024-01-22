@@ -16,7 +16,6 @@ Notifications.setNotificationHandler({
     shouldShowAlert: true,
     shouldPlaySound: true,
     shouldSetBadge: false,
-    priority: "high",
   }),
 });
 
@@ -30,9 +29,6 @@ export default function Countdown({ expiryTimestamp, user, lado, valor }) {
     autoStart: false,
     onExpire: () => finished(),
   });
-
-  // console.log(minutes);
-  // console.log(seconds);
 
   function handleSubmit() {
     const time = new Date();
